@@ -1,0 +1,29 @@
+name: Deploy WasmJS to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Запуск при каждом пуше в ветку main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build WasmJS
+        run: ./gradlew wasmJsBrowserDistribution
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Укажи путь к папке с результатом сборки (проверь, чтобы он совпадал с твоим проектом)
+          publish_dir: ./composeApp/build/dist/wasmJs/productionExecutable
