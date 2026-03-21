@@ -28,14 +28,14 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Build Wasm Production
-        run: ./gradlew :composeApp:wasmJsBrowserDistribution
+      - name: Build Production
+        run: ./gradlew :composeApp:jsBrowserDistribution
 
       - name: Remove .map files
         run: rm -f composeApp/build/dist/wasmJs/productionExecutable/*.map
 
       - name: Create .nojekyll
-        run: touch composeApp/build/dist/wasmJs/productionExecutable/.nojekyll
+        run: touch composeApp/build/dist/js/productionExecutable/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
